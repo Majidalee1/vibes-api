@@ -16,8 +16,6 @@ export const typeOrmConfig: TypeOrmModuleAsyncOptions = {
         ? true
         : false;
 
-    console.log('isDevEnv', isDevEnv);
-    console.log('current dir', __dirname);
     config = {
       type: 'mysql',
       host: process.env.DB_HOST || '',

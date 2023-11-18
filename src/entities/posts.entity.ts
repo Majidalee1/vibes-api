@@ -5,6 +5,7 @@ import {
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
+  JoinColumn,
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
@@ -12,6 +13,7 @@ import {
 } from 'typeorm';
 
 import { Comment } from './comments.entity';
+import { User } from './users.entity';
 
 export enum PostType {
   TIMELINE = 'timeline',
@@ -35,6 +37,7 @@ export class Post extends BaseEntity {
 
   @Column({ type: 'json', nullable: true })
   tags: string[];
+
   @Column({ type: 'json', nullable: true })
   info: Record<string, any> | null;
 
@@ -47,8 +50,9 @@ export class Post extends BaseEntity {
   @Column({ type: 'varchar', length: 200, nullable: true })
   location: string;
 
-  @ManyToOne(() => Post, (post) => post.postedBy)
-  postedBy: Post;
+  @ManyToOne(() => User, (user) => user.posts)
+  @JoinColumn({ name: 'userId' })
+  postedBy: User;
 
   @OneToMany(() => Comment, (comment) => comment.post)
   comments: Comment[];

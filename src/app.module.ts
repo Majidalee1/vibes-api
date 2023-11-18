@@ -2,14 +2,15 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ConfigModule } from '@nestjs/config';
-import { SimpleModule } from './modules/simple/simple.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { HealthCheckModule } from './modules/healthcheck/healthcheck.module';
 import { typeOrmConfig } from './config';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { APP_GUARD } from '@nestjs/core';
-import { UsersModule } from './users/users.module';
-import { PostsModule } from './posts/posts.module';
+import { UsersModule } from './modules/users/users.module';
+import { PostsModule } from './modules/posts/posts.module';
+import { AuthModule } from './modules/auth/auth.module';
+import { EventsModule } from './modules/events/events.module';
 
 @Module({
   imports: [
@@ -27,10 +28,11 @@ import { PostsModule } from './posts/posts.module';
     ThrottlerModule.forRoot(),
 
     // Global modules
-    SimpleModule,
     HealthCheckModule,
     UsersModule,
     PostsModule,
+    AuthModule,
+    EventsModule,
   ],
   controllers: [AppController],
   providers: [

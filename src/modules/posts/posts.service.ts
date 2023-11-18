@@ -17,7 +17,11 @@ export class PostsService {
   }
 
   findAll() {
-    const response = this.postRepository.find();
+    const response = this.postRepository.find({
+      relations: {
+        postedBy: true,
+      },
+    });
     return response;
   }
 
@@ -25,6 +29,9 @@ export class PostsService {
     return this.postRepository.findOne({
       where: {
         id,
+      },
+      relations: {
+        postedBy: true,
       },
     });
   }

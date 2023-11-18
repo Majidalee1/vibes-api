@@ -1,6 +1,5 @@
 // type orm entity
-
-import { Exclude, Expose } from 'class-transformer';
+import { Exclude } from 'class-transformer';
 import {
   BaseEntity,
   Column,
@@ -13,8 +12,6 @@ import {
 } from 'typeorm';
 import { Post } from './posts.entity';
 import { Notification } from './notifications.entity';
-import { ApiProperty } from '@nestjs/swagger';
-import { isEmail, isNotEmpty } from 'class-validator';
 
 @Entity({ name: 'users' })
 export class User extends BaseEntity {
@@ -41,12 +38,15 @@ export class User extends BaseEntity {
     [key: string]: any;
   }[];
 
-  @Exclude()
+  // @Exclude()
   @Column({ type: 'varchar' })
   password: string;
 
   @Column({ type: 'varchar', unique: true })
   phone: string;
+
+  @Column({ type: 'longtext', nullable: true })
+  sessionToken: string;
 
   @OneToMany(() => User, (user) => user.following)
   following: User[];

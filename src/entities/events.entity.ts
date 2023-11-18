@@ -14,7 +14,6 @@ import { User } from './users.entity';
 @Entity({ name: 'events' })
 export class Event extends BaseEntity {
   // event name, event description, event image, event date, event location, event type, event price, event user
-
   @PrimaryGeneratedColumn('uuid')
   id: string;
 

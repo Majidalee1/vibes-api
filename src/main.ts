@@ -6,14 +6,13 @@ import { GlobalExceptionFilter } from './common/filters/globalException';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
-  // // validation
-  // app.useGlobalPipes(
-  //   new ValidationPipe({
-  //     whitelist: true, // remove the field that are not in Dto
-  //     forbidNonWhitelisted: true, // throw an error is field does not exits in dto
-
-  //   }),
-  // );
+  // validation
+  app.useGlobalPipes(
+    new ValidationPipe({
+      whitelist: true, // remove the field that are not in Dto
+      forbidNonWhitelisted: true, // throw an error is field does not exits in dto
+    }),
+  );
   // ******************* Settings *********************
 
   // ? app port
