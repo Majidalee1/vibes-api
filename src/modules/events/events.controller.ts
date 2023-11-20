@@ -16,7 +16,6 @@ import { IUserSession } from 'src/shared/interfaces';
 import { JwtAuthGuard } from 'src/common/guard/jwtAuth.guard';
 
 @ApiTags('Event')
-@UseGuards(JwtAuthGuard)
 @Controller('events')
 export class EventsController {
   constructor(private readonly eventsService: EventsService) {}
