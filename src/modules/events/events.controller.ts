@@ -13,7 +13,6 @@ import { CreateEventDto, UpdateEventDto } from './events.dto';
 import { ApiTags } from '@nestjs/swagger';
 import { GetUser } from 'src/common/decorators';
 import { IUserSession } from 'src/shared/interfaces';
-import { JwtAuthGuard } from 'src/common/guard/jwtAuth.guard';
 
 @ApiTags('Event')
 @Controller('events')
@@ -26,27 +25,21 @@ export class EventsController {
   }
 
   @Post()
-  async createEvent(
-    @Body() body: CreateEventDto,
-    @GetUser() user: IUserSession,
-  ) {
-    return await this.eventsService.createEvent(body, user);
+  async createEvent(@Body() body: CreateEventDto) {
+    return await this.eventsService.createEvent(body);
   }
 
   @Delete(':id')
-  async deleteEvent(
-    @GetUser() user: IUserSession,
-    @Param('id') eventId: string,
-  ) {
-    return await this.eventsService.deleteEvent(user, eventId);
+  async deleteEvent(@Param('id') eventId: string) {
+    return await this.eventsService.deleteEvent(eventId);
   }
 
   @Patch(':id')
   async updateEvent(
-    @GetUser() user: IUserSession,
+    // @GetUser() user: IUserSession,
     @Param('id') eventId: string,
     @Body() body: UpdateEventDto,
   ) {
-    return await this.eventsService.updateEvent(body, user, eventId);
+    return await this.eventsService.updateEvent(body, eventId);
   }
 }

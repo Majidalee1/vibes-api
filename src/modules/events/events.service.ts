@@ -21,30 +21,30 @@ export class EventsService {
     });
   }
 
-  async createEvent(payload: CreateEventDto, userSession: IUserSession) {
+  async createEvent(payload: CreateEventDto) {
     const event = this.eventRepo.create({
       ...payload,
       postedBy: {
-        id: userSession.userId,
+        id: payload.userId,
       },
     });
 
     return this.eventRepo.save(event);
   }
 
-  async deleteEvent(userSession: IUserSession, eventId: string) {
-    const isUserAuthorized = this.eventRepo.findOne({
-      where: {
-        id: eventId,
-        postedBy: {
-          id: userSession.userId,
-        },
-      },
-    });
+  async deleteEvent(eventId: string) {
+    // const isUserAuthorized = this.eventRepo.findOne({
+    //   where: {
+    //     id: eventId,
+    //     postedBy: {
+    //       id: userSession.userId,
+    //     },
+    //   },
+    // });
 
-    if (!isUserAuthorized) {
-      throw new Exception.BadRequestException('user is not Authorized');
-    }
+    // if (!isUserAuthorized) {
+    //   throw new Exception.BadRequestException('user is not Authorized');
+    // }
 
     return this.eventRepo.delete({
       id: eventId,
@@ -53,21 +53,21 @@ export class EventsService {
 
   async updateEvent(
     payload: UpdateEventDto,
-    userSession: IUserSession,
+    // userSession: IUserSession,
     eventId: string,
   ) {
-    const isUserAuthorized = this.eventRepo.findOne({
-      where: {
-        id: eventId,
-        postedBy: {
-          id: userSession.userId,
-        },
-      },
-    });
+    // const isUserAuthorized = this.eventRepo.findOne({
+    //   where: {
+    //     id: eventId,
+    //     postedBy: {
+    //       id: userSession.userId,
+    //     },
+    //   },
+    // });
 
-    if (!isUserAuthorized) {
-      throw new Exception.BadRequestException('user is not Authorized');
-    }
+    // if (!isUserAuthorized) {
+    //   throw new Exception.BadRequestException('user is not Authorized');
+    // }
 
     await this.eventRepo.update({ id: eventId }, payload);
 

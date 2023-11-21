@@ -1,5 +1,11 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsArray, IsNotEmpty, IsOptional, IsString } from 'class-validator';
+import {
+  IsArray,
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+  IsUUID,
+} from 'class-validator';
 
 export class CreateEventDto {
   @ApiProperty()
@@ -46,6 +52,11 @@ export class CreateEventDto {
   @IsNotEmpty()
   @IsArray()
   organizers: string[];
+
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsUUID()
+  userId: string;
 }
 
 export class UpdateEventDto {
