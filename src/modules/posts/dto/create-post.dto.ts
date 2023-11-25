@@ -25,6 +25,12 @@ export class CreatePostDto {
   @IsOptional()
   tags: string[];
 
+  // optional isPrivate
+  @Expose()
+  @ApiProperty()
+  @IsOptional()
+  isPrivate: boolean;
+
   @Expose()
   @ApiProperty()
   @IsOptional()

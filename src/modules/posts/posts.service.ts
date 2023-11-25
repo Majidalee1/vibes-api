@@ -4,16 +4,27 @@ import { UpdatePostDto } from './dto/update-post.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Post } from 'src/entities/posts.entity';
 import { Repository } from 'typeorm';
+import { User } from 'src/entities/users.entity';
 
 @Injectable()
 export class PostsService {
   constructor(
     @InjectRepository(Post)
     private readonly postRepository: Repository<Post>,
+    @InjectRepository(User)
+    private readonly userRepository: Repository<User>,
   ) {}
 
-  create(createPostDto: CreatePostDto) {
-    return this.postRepository.save(createPostDto);
+  async create(createPostDto: CreatePostDto) {
+    const post = this.postRepository.create(createPostDto);
+
+    post.postedBy = await this.userRepository.findOneOrFail({
+      where: {
+        member_id: createPostDto.postedBy.member_id,
+      },
+    });
+
+    return this.postRepository.save(post);
   }
 
   findAll() {

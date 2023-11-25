@@ -44,14 +44,17 @@ export class Post extends BaseEntity {
   @Column({ type: 'integer', default: 0 })
   likes: number;
 
+  @Column({ type: 'boolean', default: false })
+  isPrivate: boolean;
+
   @Column({ type: 'enum', enum: PostType, default: PostType.TIMELINE })
   postType: PostType;
 
   @Column({ type: 'varchar', length: 200, nullable: true })
   location: string;
 
-  @ManyToOne(() => User, (user) => user.posts)
-  @JoinColumn({ name: 'userId' })
+  @ManyToOne(() => User, (user) => user.member_id)
+  @JoinColumn({ name: 'member_id' })
   postedBy: User;
 
   @OneToMany(() => Comment, (comment) => comment.post)

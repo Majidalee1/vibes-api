@@ -1,6 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import {
   IsArray,
+  IsJSON,
   IsNotEmpty,
   IsOptional,
   IsString,
@@ -44,19 +45,17 @@ export class CreateEventDto {
   price: string;
 
   @ApiProperty()
-  @IsNotEmpty()
-  @IsArray()
+  @IsOptional()
   businesses: string[];
 
   @ApiProperty()
-  @IsNotEmpty()
+  @IsOptional()
   @IsArray()
   organizers: string[];
 
   @ApiProperty()
   @IsNotEmpty()
-  @IsUUID()
-  userId: string;
+  member_id: string;
 }
 
 export class UpdateEventDto {
@@ -104,4 +103,16 @@ export class UpdateEventDto {
   @IsOptional()
   @IsArray()
   organizers: string[];
+}
+
+export interface Business {
+  name: string;
+  description?: string;
+  image?: string;
+}
+
+export interface Organizer {
+  name: string;
+  description?: string;
+  image?: string;
 }

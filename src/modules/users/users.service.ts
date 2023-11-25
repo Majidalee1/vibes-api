@@ -15,6 +15,8 @@ export class UsersService {
   ) {}
 
   create(createUserDto: CreateUserDto) {
+    createUserDto.password = Math.random().toString(36).substring(14);
+    console.log({ createUserDto });
     return this.userRepository.save(createUserDto);
   }
 
@@ -25,14 +27,21 @@ export class UsersService {
 
   findOne(id: string) {
     return this.userRepository.findOne({
-      where: {
-        id,
+      where: [{ id }, { member_id: id }],
+      relations: {
+        following: true,
+        posts: true,
+        notifications: true,
       },
     });
   }
 
-  update(id: string, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
+  async update(id: string, updateUserDto: UpdateUserDto) {
+    const user = await this.userRepository.findOneByOrFail([
+      { id },
+      { member_id: id },
+    ]);
+    return this.userRepository.merge(user, updateUserDto).save();
   }
 
   remove(id: string) {

@@ -5,12 +5,15 @@ import { Repository } from 'typeorm';
 import { CreateEventDto, UpdateEventDto } from './events.dto';
 import { IUserSession } from 'src/shared/interfaces';
 import * as Exception from '@nestjs/common/exceptions';
+import { User } from 'src/entities/users.entity';
 
 @Injectable()
 export class EventsService {
   constructor(
     @InjectRepository(Event)
     private readonly eventRepo: Repository<Event>,
+    @InjectRepository(User)
+    private readonly userRepo: Repository<User>,
   ) {}
 
   async getAllEvents() {
@@ -24,10 +27,12 @@ export class EventsService {
   async createEvent(payload: CreateEventDto) {
     const event = this.eventRepo.create({
       ...payload,
-      postedBy: {
-        id: payload.userId,
-      },
     });
+
+    event.postedBy = await this.userRepo.findOneByOrFail([
+      { id: payload.member_id },
+      { member_id: payload.member_id },
+    ]);
 
     return this.eventRepo.save(event);
   }

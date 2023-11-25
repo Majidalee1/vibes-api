@@ -1,5 +1,5 @@
 // type orm entity
-import { Exclude } from 'class-transformer';
+import { Exclude, instanceToPlain, plainToClass } from 'class-transformer';
 import {
   BaseEntity,
   Column,
@@ -38,7 +38,10 @@ export class User extends BaseEntity {
     [key: string]: any;
   }[];
 
-  // @Exclude()
+  @Column({ type: 'varchar', nullable: true })
+  imageUrl: string;
+
+  @Exclude()
   @Column({ type: 'varchar' })
   password: string;
 

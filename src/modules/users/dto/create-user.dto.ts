@@ -25,9 +25,15 @@ export class CreateUserDto {
   username: string;
 
   @Exclude()
-  @IsNotEmpty()
   @ApiProperty()
   password: string;
+
+  // imgUrl
+
+  @ApiProperty()
+  @Expose()
+  @IsOptional()
+  imageUrl: string;
 
   @ApiProperty()
   @Expose()
