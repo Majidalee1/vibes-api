@@ -6,6 +6,10 @@ import {
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
+  JoinColumn,
+  JoinTable,
+  ManyToMany,
+  ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
@@ -51,10 +55,17 @@ export class User extends BaseEntity {
   @Column({ type: 'longtext', nullable: true })
   sessionToken: string;
 
-  @OneToMany(() => User, (user) => user.following)
+  @ManyToMany((type) => User, (user) => user.following)
+  @JoinTable()
+  followers: User[];
+
+  // Many-to-Many relationship: a user can follow other users
+  @ManyToMany((type) => User, (user) => user.followers)
+  @JoinTable()
   following: User[];
 
-  @OneToMany(() => Post, (post) => post.postedBy)
+  @OneToMany(() => Post, (post) => post.postedBy, {})
+  @JoinColumn({ name: 'member_id' })
   posts: Post[];
 
   @OneToMany(() => Notification, (notification) => notification.user)

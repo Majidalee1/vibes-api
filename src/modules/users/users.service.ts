@@ -29,9 +29,10 @@ export class UsersService {
     return this.userRepository.findOne({
       where: [{ id }, { member_id: id }],
       relations: {
-        following: true,
         posts: true,
         notifications: true,
+        following: true,
+        followers: true,
       },
     });
   }
