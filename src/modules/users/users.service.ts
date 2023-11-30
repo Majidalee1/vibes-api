@@ -25,6 +25,23 @@ export class UsersService {
     return response;
   }
 
+  // add followers
+
+  async addFollower(id: string, followerId: string) {
+    const user = await this.userRepository.findOneByOrFail([
+      { id },
+      { member_id: id },
+    ]);
+    const follower = await this.userRepository.findOneOrFail({
+      where: [{ id: followerId }, { member_id: followerId }],
+      relations: {
+        followers: true,
+      },
+    });
+    user.followers.push(follower);
+    return this.userRepository.save(user);
+  }
+
   findOne(id: string) {
     return this.userRepository.findOne({
       where: [{ id }, { member_id: id }],

@@ -43,4 +43,11 @@ export class UsersController {
   remove(@Param('id') id: string) {
     return this.usersService.remove(id);
   }
+
+  // async addFollower(id: string, followerId: string) {
+
+  @Post('add-follower/:id')
+  addFollower(@Param('id') id: string, @Body('followerId') followerId: string) {
+    return this.usersService.addFollower(id, followerId);
+  }
 }

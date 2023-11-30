@@ -56,8 +56,13 @@ export class User extends BaseEntity {
   sessionToken: string;
 
   @ManyToMany((type) => User, (user) => user.following)
-  @JoinTable()
+  @JoinTable({
+    name: 'user_followers',
+  })
   followers: User[];
+
+  @Column({ type: 'array', nullable: true })
+  chatIds: string[];
 
   // Many-to-Many relationship: a user can follow other users
   @ManyToMany((type) => User, (user) => user.followers)
