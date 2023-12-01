@@ -61,7 +61,7 @@ export class User extends BaseEntity {
   })
   followers: User[];
 
-  @Column({ type: 'array', nullable: true })
+  @Column({ type: 'json', nullable: true })
   chatIds: string[];
 
   // Many-to-Many relationship: a user can follow other users
