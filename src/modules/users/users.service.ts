@@ -38,6 +38,11 @@ export class UsersService {
         followers: true,
       },
     });
+
+    if (!user.followers) {
+      user.followers = [];
+    }
+
     user.followers.push(follower);
     return this.userRepository.save(user);
   }
