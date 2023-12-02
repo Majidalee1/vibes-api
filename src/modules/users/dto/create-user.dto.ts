@@ -38,6 +38,11 @@ export class CreateUserDto {
   @ApiProperty()
   @Expose()
   @IsOptional()
+  chatIds: string[];
+
+  @ApiProperty()
+  @Expose()
+  @IsOptional()
   phone: string;
 
   @ApiProperty()
