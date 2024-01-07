@@ -51,6 +51,11 @@ export class User extends BaseEntity {
   @Column({ type: 'varchar', nullable: true })
   imageUrl: string;
 
+  // date of birth
+  @Column({ type: 'date', nullable: true })
+  dob: Date;
+
+
   @Exclude()
   @Column({ type: 'varchar' })
   password: string;

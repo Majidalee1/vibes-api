@@ -36,6 +36,11 @@ export class CreateUserDto {
   @ApiProperty()
   @Expose()
   @IsOptional()
+  dob: Date;
+
+  @ApiProperty()
+  @Expose()
+  @IsOptional()
   homeTown: string;
 
   @ApiProperty()
